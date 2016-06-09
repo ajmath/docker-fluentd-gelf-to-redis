@@ -5,13 +5,11 @@ docker metadata to a custom format, append ec2 metadata, and ship to redis for
 further processing with logstash.
 
 ## environment variables
-* `PULL_EC2_METADATA` - EC2 metadata is optional and will only be present when
-  is set to something
-* `LABELS` - Comma-separated list of docker labels to include in the event
-* `REDIS_HOST` - Host name for the redis server in the form `my-redis-host.coolsite.com`
-* `REDIS_PORT` - Optional.  Defaults to 6379
-* `REDIS_KEY` - Redis key to RPUSH events into
-* `LOGSTASH_OPTS` - Default set of options to apply to all events being sent through
+* `REDIS_HOST` - Required. Host name for the redis server in the form `my-redis-host.coolsite.com`
+* `REDIS_KEY` - Required. Redis key to RPUSH events into
+* `LABELS` - Optional. Comma-separated list of docker labels to include in the event
+* `REDIS_PORT` - Optional. Defaults to 6379
+* `LOGSTASH_OPTS` - Optional. Default set of options to apply to all events being sent through
   fluentd.  This should be an escaped json string.  This will be added to the `options` key of the event.   Per-container
   logstash opts can be set by setting the `LOGSTASH_OPTS` environment variable
   on the container whose logs are being ingested and passing `--log-opt env=LOGSTASH_OPTS`

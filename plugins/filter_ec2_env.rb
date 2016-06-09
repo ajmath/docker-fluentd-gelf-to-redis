@@ -26,11 +26,16 @@ module Fluent
       super
 
       @ec2_info = {}
-      @ec2_info["instance-id"] = ENV["EC2_INSTANCE_ID"] if ENV["EC2_INSTANCE_ID"]
-      @ec2_info["instance-type"] = ENV["EC2_INSTANCE_TYPE"] if ENV["EC2_INSTANCE_TYPE"]
-      @ec2_info["private-ip"] = ENV["EC2_PRIVATE_IP"] if ENV["EC2_PRIVATE_IP"]
-      @ec2_info["public-ip"] = ENV["EC2_PUBLIC_IP"] if ENV["EC2_PUBLIC_IP"]
-      @ec2_info["ami-id"] = ENV["EC2_AMI_ID"] if ENV["EC2_AMI_ID"]
+      @ec2_info["instance-id"] = ENV["EC2_INSTANCE_ID"] if env_present "EC2_INSTANCE_ID"
+      @ec2_info["instance-type"] = ENV["EC2_INSTANCE_TYPE"] if env_present "EC2_INSTANCE_TYPE"
+      @ec2_info["private-ip"] = ENV["EC2_PRIVATE_IP"] if env_present "EC2_PRIVATE_IP"
+      @ec2_info["public-ip"] = ENV["EC2_PUBLIC_IP"] if env_present "EC2_PUBLIC_IP"
+      @ec2_info["ami-id"] = ENV["EC2_AMI_ID"] if env_present "EC2_AMI_ID"
+    end
+
+
+    def env_present(name)
+      !ENV[name].nil? and !ENV[name].empty?
     end
 
     def configure(conf)
